@@ -1,7 +1,7 @@
 const content = document.getElementById('content')
 
 const render = () => {
-    fetch('api/sessions/perfil', {
+    fetch('api/sessions/current', {
     }).then(
         res => {
             if(!res.ok) throw new Error ('Error en la petición')

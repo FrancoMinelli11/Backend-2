@@ -46,7 +46,7 @@ router.post('/login', passport.authenticate('login', {session:false}), (req, res
 })
 
 router.get('/perfil',passport.authenticate('current', {session:false}), (req, res) => {
-    res.json({payload: req.user})
+    res.redirect('/profile.html')
 })
 
 router.get('/current', passport.authenticate('current', {session:false}), (req, res) => {
