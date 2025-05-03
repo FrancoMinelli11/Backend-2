@@ -14,6 +14,14 @@ submitBtn.addEventListener('click', async (e) => {
     const first_name = nameInput.value
     const last_name = lastNameInput.value
     const age = ageInput.value
+    if(age < 0 || age > 100) {
+        ageInput.value = ''
+        messages.innerHTML = 'La edad debe ser un número entre 0 y 100'
+        setTimeout(() => {
+            messages.innerHTML = ''
+        }, 3000)
+        return
+    }
     const email = emailInput.value
     const password = passwordInput.value
     if(!first_name || !last_name || !email || !password || !age) {

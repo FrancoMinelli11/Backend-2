@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { userManager } from '../userManager.js'
 
 const cartSchema = new mongoose.Schema({
     products: {
@@ -25,7 +24,10 @@ const cartSchema = new mongoose.Schema({
 
 cartSchema.pre(/^find/, function(next) {
     this.populate('products.product')
-    // this.populate('user')
+    this.populate({
+        path: 'user',
+        select: 'email'
+    })
     next()
 })
 

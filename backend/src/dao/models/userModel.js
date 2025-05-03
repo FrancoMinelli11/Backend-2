@@ -45,10 +45,10 @@ UserSchema.pre('save', async function (next) {
     next()
 })
 
-UserSchema.pre(/^find/, function (next) {
-    this.populate('cart')
-    next()
-})
+// UserSchema.pre(/^find/, function (next) {
+//     this.populate('cart')
+//     next()
+// })
 
 
 

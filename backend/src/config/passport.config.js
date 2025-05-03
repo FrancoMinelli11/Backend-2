@@ -1,7 +1,7 @@
 import passport from "passport";
 import local from 'passport-local'
 import passportJWT from 'passport-jwt'
-import { userManager } from "../dao/userManager.js";
+import { userDAO } from "../dao/userDAO.js";
 import { passwordHash, validateHash } from "../utils.js";
 import { config } from "./config.js";
 
@@ -23,10 +23,10 @@ export const initializePassport = () => {
         try {
             const {first_name, last_name, age} = req.body
             if(!first_name || !last_name || !age) return done(null, false)
-            let user = await userManager.findUser({email:username})
+            let user = await userDAO.get({email:username})
             if(user) return done(null, false)
             password = passwordHash(password)
-            user = await userManager.createUser({first_name, last_name, age, email:username, password})
+            user = await userDAO.post({first_name, last_name, age, email:username, password})
             return done(null, user)
         } catch (error) {
             done(error)
@@ -39,7 +39,7 @@ export const initializePassport = () => {
         },
         async (username, password, done) => {
             try {
-                const user = await userManager.findUser({email:username})
+                const user = await userDAO.get({email:username})
                 if(!user || !validateHash(password, user.password)) return done(null, false)
                 return done(null, user)
             } catch (error) {

@@ -1,13 +1,13 @@
 import { userModel } from "./models/userModel.js";
 
-export class userManager {
+export class userDAO {
 
-    static async createUser(user) {
+    static async post(user) {
         const newUser = await userModel.create(user)
         return newUser.toJSON()
     }
 
-    static async findUser(filter) {
+    static async get(filter) {
         return await userModel.findOne(filter).lean()
     }
 

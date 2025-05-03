@@ -1,24 +1,24 @@
 import { productModel } from "./models/productModel.js";
 
-export class ProductManager {
-    static async createProduct(product) {
+export class productDAO {
+    static async post(product) {
         const newProduct = await productModel.create(product)
         return newProduct.toJSON()
     }
 
-    static async getProducts() {
+    static async get() {
         return await productModel.find().lean()
     }
 
-    static async getProductById(id) {
+    static async getById(id) {
         return await productModel.findById(id).lean()
     }
 
-    static async updateProduct(id, product) {
+    static async put(id, product) {
         return await productModel.findByIdAndUpdate(id, product, { new: true }).lean()
 }
     
-        static async deleteProduct(id) {
+        static async delete(id) {
             return await productModel.findByIdAndDelete(id).lean()
         }
     }

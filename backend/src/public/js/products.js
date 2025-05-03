@@ -33,6 +33,15 @@ const getProducts = async () => {
                         <form action="/api/product/${product._id}?_method=DELETE" method="post">
                             <button type="submit">Eliminar</button>
                         </form>
+                        <form action="/api/product/${product._id}?_method=PUT" method="post" enctype="multipart/form-data">
+                            <input type="text" name="title" value="${product.title}">
+                            <input type="text" name="description" value="${product.description}">
+                            <input type="number" name="price" value="${product.price}">
+                            <input type="file" name="thumbnail">
+                            <input type="text" name="code" value="${product.code}">
+                            <input type="number" name="stock" value="${product.stock}"> 
+                            <input type="text" name="category" value="${product.category}">
+                            <button type="submit">Modificar</button>
                     `
                 } else {
                     productDiv.innerHTML = `

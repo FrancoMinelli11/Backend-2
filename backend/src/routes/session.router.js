@@ -1,7 +1,6 @@
 import { Router } from "express";
-import jwt from 'jsonwebtoken'
 import passport from "passport";
-import { config } from "../config/config.js";
+import { UserController } from "../controllers/user.controller.js";
 
 export const router = Router();
 
@@ -33,27 +32,12 @@ export const router = Router();
 //     }
 // });
 
-router.post('/register', passport.authenticate('register', {session:false}), (req, res) => {
-    res.send({status: 'success', payload: req.user})
-})
+router.post('/register', passport.authenticate('register', {session:false}), UserController.register)
 
-router.post('/login', passport.authenticate('login', {session:false}), (req, res) => {
-    const user = req.user
-    delete user.password
-    const token = jwt.sign(user, config.JWT_SECRET, {expiresIn: 60 * 60})
-    res.cookie('token', token, {httpOnly: true})
-    res.json({status: 'success', payload: {user}})
-})
+router.post('/login', passport.authenticate('login', {session:false}), UserController.login)
 
-router.get('/perfil',passport.authenticate('current', {session:false}), (req, res) => {
-    res.redirect('/profile.html')
-})
+router.get('/perfil',passport.authenticate('current', {session:false}), UserController.loadProfile)
 
-router.get('/current', passport.authenticate('current', {session:false}), (req, res) => {
-    res.json({payload: req.user})
-})
+router.get('/current', passport.authenticate('current', {session:false}), UserController.current)
 
-router.get('/logout', (req, res) => {
-    res.clearCookie('token')
-    res.redirect('/')
-})
+router.get('/logout', UserController.logout)
