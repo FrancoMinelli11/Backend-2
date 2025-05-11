@@ -23,7 +23,6 @@ export class UserController {
 
     static logout (req, res) {
         res.clearCookie('token')
-        res.redirect('/login.html')
-    }
-
+        res.json({status: 'success', message: 'Logout successful'})
+    }    
 }

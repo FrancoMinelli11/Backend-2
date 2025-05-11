@@ -6,7 +6,7 @@ import { ProductController } from "../controllers/product.controller.js";
 
 export const router = Router()
 
-router.post('/createProduct', uploader.single('thumbnail'),passport.authenticate('current', {session:false}),auth,ProductController.createProduct )
+router.post('/', uploader.single('thumbnail'),passport.authenticate('current', {session:false}),auth,ProductController.createProduct )
 
 router.get('/', ProductController.getProducts)
 

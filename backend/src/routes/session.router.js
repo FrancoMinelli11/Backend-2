@@ -41,3 +41,4 @@ router.get('/perfil',passport.authenticate('current', {session:false}), UserCont
 router.get('/current', passport.authenticate('current', {session:false}), UserController.current)
 
 router.get('/logout', UserController.logout)
+

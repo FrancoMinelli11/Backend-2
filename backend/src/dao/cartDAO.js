@@ -1,6 +1,6 @@
 import { cartModel } from './models/cartModel.js'
 export class cartDAO {
-    static async get(id) {
+    static async getById(id) {
         try {
             const cart = await cartModel.findById(id).lean()
             return cart

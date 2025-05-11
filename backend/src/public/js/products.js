@@ -1,11 +1,11 @@
 const contentDiv = document.getElementById('content')
-const checkAdmin = async () => {
+
+const user = async () => {
     try {
         const res = await fetch('/api/sessions/current')
         if (!res.ok) throw new Error('Error en la petición')
         const data = await res.json()
-        if(data.payload.role === 'admin') return true
-        return false
+        return data.payload
     } catch (error) {
         console.error(error)
     }
@@ -14,7 +14,7 @@ const checkAdmin = async () => {
 
 const getProducts = async () => {
     try {
-        const isAdmin = await checkAdmin()
+        const userResponse = await user()
         fetch('/api/product')
         .then(res => res.json())
         .then(data => {
@@ -23,7 +23,7 @@ const getProducts = async () => {
             contentDiv.innerHTML = ''
             products.forEach(product => {
                 const productDiv = document.createElement('div')
-                if(isAdmin) {
+                if(userResponse.role === 'admin') {
                     productDiv.innerHTML = `
                         <h2>${product.title}</h2>
                         <p>${product.description}</p>
@@ -50,9 +50,8 @@ const getProducts = async () => {
                         <p>$${product.price}</p>
                         <p>${product.stock}</p>
                         <img src='/img/${product.thumbnail}' alt="${product.title}">
-                        <form action="/api/cart/add?_method=PUT" method="post">
-                            <input type="hidden" name="product" value="${product._id}">
-                            <input type="number" name="quantity" value="1" min="1"> 
+                        <form action="/api/cart/${userResponse.cart}/product/${product._id}?_method=PUT" method="post">
+                            <input type="number" name="quantity" value="1" max=${product.stock} min="1"> 
                             <button type="submit">Agregar</button>
                         </form>
                     `
